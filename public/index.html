@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI Prompt Sequencer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>OpenAI Prompt Sequencer</h1>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="prompts">Prompts</button>
+            <button class="tab-btn" data-tab="settings">Settings</button>
+            <button class="tab-btn" data-tab="results">Results</button>
+            <button class="tab-btn" data-tab="memory">Memory Log</button>
+        </div>
+
+        <div id="prompts" class="tab-pane active">
+            <div class="file-upload">
+                <div class="upload-controls">
+                    <div class="upload-section">
+                        <h2>Upload Prompts</h2>
+                        <p class="file-info">Upload a CSV file with your prompts or download a template.</p>
+                        <div class="button-group">
+                            <input type="file" id="csvUpload" accept=".csv" style="display: none">
+                            <button class="btn" onclick="document.getElementById('csvUpload').click()">Upload CSV</button>
+                            <button class="btn" id="downloadTemplate">Download Template</button>
+                            <button class="btn" id="exportPrompts">Export Prompts</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="promptSequences"></div>
+            
+            <div class="bottom-controls">
+                <button class="btn primary" id="addPrompt">Add Prompt</button>
+                <button class="btn primary" id="execute">Execute All</button>
+            </div>
+        </div>
+
+        <div id="settings" class="tab-pane">
+            <div class="settings-container">
+                <h2>Global Parameters</h2>
+                <p class="parameters-info">Set default parameters for all prompts. Leave empty to keep current values.</p>
+                
+                <div class="prompt-header">
+                    <div class="parameter-group">
+                        <label>Role</label>
+                        <select id="globalRole">
+                            <option value="">Keep Current</option>
+                            <option value="system">System</option>
+                            <option value="user">User</option>
+                            <option value="assistant">Assistant</option>
+                        </select>
+                    </div>
+                    <div class="parameter-group">
+                        <label>Model</label>
+                        <select id="globalModel">
+                            <option value="">Keep Current</option>
+                            <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                            <option value="gpt-4">GPT-4</option>
+                        </select>
+                    </div>
+                    <div class="parameter-group">
+                        <label>Max Tokens</label>
+                        <input type="number" id="globalMaxTokens" min="1">
+                    </div>
+                    <div class="parameter-group">
+                        <label>Temperature</label>
+                        <input type="number" id="globalTemperature" min="0" max="2" step="0.1">
+                    </div>
+                    <div class="parameter-group">
+                        <label>Use Memory</label>
+                        <select id="globalUseMemory">
+                            <option value="">Keep Current</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                    <div class="parameter-group">
+                        <label>Use Predecessor</label>
+                        <select id="globalPredecessor">
+                            <option value="">Keep Current</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button class="btn primary" id="applyParameters">Apply Parameters</button>
+
+                <h2>Global Context</h2>
+                <p class="context-info">Set a global context that will be used for all prompts.</p>
+                <textarea id="globalContext" placeholder="Enter global context..."></textarea>
+                
+                <div class="context-controls">
+                    <input type="file" id="importContext" accept=".txt" style="display: none">
+                    <button class="btn" id="importContextBtn">Import Context</button>
+                    <button class="btn" id="exportContext">Export Context</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="results" class="tab-pane">
+            <div class="results-container">
+                <h2>Sequential Answers</h2>
+                <div id="sequentialAnswers"></div>
+            </div>
+        </div>
+
+        <div id="memory" class="tab-pane">
+            <div class="memory-container">
+                <h2>Memory Log</h2>
+                <div id="memoryLog"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-overlay">
+        <div class="loading-message">
+            <div class="loading-spinner"></div>
+            <span>Processing...</span>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
